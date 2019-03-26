@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import 'babel-polyfill'; // tslint:disable-line: no-import-side-effect
 import { execSync, spawn } from 'child_process';
 import program from 'commander';
 import isCI from 'is-ci';

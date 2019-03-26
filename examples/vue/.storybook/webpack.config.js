@@ -1,15 +1,10 @@
 const webpack = require('webpack');
 
-// load the default config generator.
-const { createDefaultWebpackConfig } = require('@storybook/core/dist/server/config/webpack.config.default.js');
-
 // Export a function. Accept the base config as the only param.
-module.exports = (storybookBaseConfig, configType) => {
-  // configType has a value of 'DEVELOPMENT' or 'PRODUCTION'
+module.exports = ({ config, mode }) => {
+  // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
   // You can change the configuration based on that.
   // 'PRODUCTION' is used when building the static version of storybook.
-
-  const config = createDefaultWebpackConfig(storybookBaseConfig, configType);
 
   // Make whatever fine-grained changes you need
   config.plugins.push(

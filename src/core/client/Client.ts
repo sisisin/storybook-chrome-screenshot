@@ -1,5 +1,5 @@
 import { Story, StoryWithOptions } from '../../models/story';
-import { API, Channel, Group } from '../../models/storybook';
+import { API, Channel, StoriesHash } from '../../models/storybook';
 import { EventTypes, PhaseTypes } from '../constants';
 import { Env } from './Env';
 import { Gateway } from './Gateway';
@@ -71,19 +71,12 @@ export class Client {
 
   private searchTargetStories(clientIndex: number, clientsCount: number) {
     return new Promise<StoryWithOptions[]>((resolve, reject) => {
-      this.channel.once('setStories', ({ stories }: { stories: Group[] }) => {
+      this.channel.once('setStories', ({ stories }: { stories: StoriesHash }) => {
         // flatten stories
-        const list = stories.reduce(
-          (acc, cur) => [
-            ...acc,
-            ...cur.stories.map((story) => ({
-              kind: cur.kind,
-              story
-            }))
-          ],
-          <Story[]>[]
-        );
-
+        const list: Story[] = Object.values(stories).map(({ kind, name }) => ({
+          kind,
+          story: name
+        }));
         // sequential promises
         // tslint:disable-next-line: no-floating-promises
         list
